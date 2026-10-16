@@ -1,46 +1,50 @@
-# Checkmate Chess Club — Website project
+# Checkmate Chess Club — Wood Edition
 
-This folder contains the complete front-end project:
-- `index.html` — website structure and pages
-- `styles.css` — responsive styling
-- `app.js` — navigation, lessons, sample events, practice board, demo chat, and Supabase auth/profile logic
-- `config.js` — place your Supabase Project URL and publishable key here
-- `supabase-schema.sql` — database table, profile security policies, and profile-creation trigger
+A responsive front-end prototype for a modern online chess club, using warm wood-brown and ivory styling. The chessboard uses an 8×8 grid with equal-sized squares, ivory/light squares, wood-brown/dark squares, and contrasting white and dark chess-piece glyphs with layered shadows.
 
-## Run it locally
-1. Extract this ZIP into a folder.
-2. Open the folder in VS Code.
-3. Use the Live Server extension and open `index.html`.
+## Files
 
-## Connect accounts and profiles with Supabase
-1. Create a Supabase project at https://supabase.com/dashboard
-2. Open **SQL Editor** in your Supabase project.
-3. Open `supabase-schema.sql`, copy all of it, paste it into SQL Editor, and click **Run**.
-4. Open **Project Settings → API Keys**. Copy the Project URL and the **publishable** key (or legacy `anon` key if that's what your project displays).
-5. Open `config.js` and replace the two `YOUR_...` placeholder values. Do not use a secret/service_role key.
-6. In Supabase **Authentication → URL Configuration**, add your local URL while testing and your Firebase URL after deployment to the Site URL / Redirect URLs.
+- `index.html` — page structure and sample club content
+- `css/styles.css` — responsive layout, wood palette, board and piece styling
+- `js/app.js` — demo interactions for board selection/moves, navigation, sample lessons, tournament buttons, and local chat
+- `config.example.js` — safe placeholder for future Supabase configuration
 
-Email confirmation may be enabled by default. If so, users must confirm their email before they can sign in.
+## Run locally
+
+**Option A: VS Code Live Server**
+1. Extract the ZIP file.
+2. Open the extracted `checkmate_chess_club_wood` folder in VS Code.
+3. Install the VS Code extension **Live Server** if needed.
+4. Right-click `index.html` and choose **Open with Live Server**.
+
+**Option B: Python**
+From this folder, run `python -m http.server 8000`, then visit `http://localhost:8000`.
 
 ## Publish with Firebase Hosting
-1. Install Node.js LTS from https://nodejs.org/
-2. Open a terminal in this folder and run:
-   ```bash
-   npm install -g firebase-tools
-   firebase login
-   firebase init hosting
-   ```
-3. Select or create a Firebase project. When asked for the public directory, enter `.` because `index.html` is in the project root. Configure as a single-page app: **No** is fine for this multi-section site. If asked whether to overwrite `index.html`, answer **No**.
-4. Deploy:
-   ```bash
-   firebase deploy --only hosting
-   ```
-5. Firebase prints the public `https://YOUR-PROJECT-ID.web.app` address. Anyone can open that address.
-6. Add that deployed URL to Supabase Authentication → URL Configuration.
 
-## Important: what is and is not live yet
-- This is a complete, responsive multi-section front-end, and account/profile logic is prepared for Supabase.
-- Until you configure Supabase, signup/signin intentionally shows a setup message.
-- Events are sample data. The practice board is visual-only and does not validate legal moves.
-- Demo chat is local to the browser; it is not shared between users.
-- Real-time multiplayer chess, shared chat, event registration, verified tournament results, ratings, and moderation require backend work before launch. Do not advertise the current demo as a rated chess platform.
+1. Open the folder in VS Code and make sure Firebase CLI is logged in.
+2. In `firebase.json`, set Hosting's `public` directory to `.` and preserve any other settings you need. Example:
+
+```json
+{
+  "hosting": {
+    "public": ".",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  }
+}
+```
+
+3. Run `firebase deploy --only hosting`.
+4. Open the Hosting URL shown in the terminal.
+
+Do not publish private files, service-role keys, `.env` files, or credentials. The ignore rules above exclude hidden files and `node_modules`, but review the folder before deployment.
+
+## Supabase integration status
+
+This is a front-end demo. Sample profiles, ratings, tournaments, and lesson content are illustrative. The chat only adds messages to the current page; it is not a shared live chat. The board allows basic piece selection and demo movement but **does not implement full legal chess rules, check/checkmate, castling, en passant, or robust bot strategy**. Real accounts, persistent profiles, rated games, secure multiplayer, tournament registration, and live chat must be integrated with Supabase and tested.
+
+If you connect Supabase, use only the project's URL and publishable/anon key in browser code, with Row Level Security policies correctly configured. Never put a Supabase service-role or secret key in public frontend files.
+
+## Customize
+
+Edit colors near the top of `css/styles.css`. Board squares are controlled by `.sq.light` and `.sq.dark`; the board is explicitly an 8-column by 8-row grid, and the board container is square (`aspect-ratio: 1/1`) so each square stays equal-sized.
